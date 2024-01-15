@@ -54,7 +54,7 @@ class Frame1(tk.Frame):
     # функция при нажатии на меню
     def menu(self):
             pass
-    # функция при нажимании замка
+    # функция при нажатии замка
     def lock(self):
         app.destroy()
         import start_window
@@ -76,13 +76,13 @@ class Data_zakaz(tk.Frame):
         super().__init__(parent)
         self.place(y=65, x = 0, height=85, width=750)
         self.configure(background="#002238")
-        # result = MainApp.curs.execute("SELECT Номер_стола FROM Карта_заказа")
-        # num_tb =0
-        # for row in result:
-        #     for field in row:
-        #         num_tb = field
-        # label = tk.Label(self,text=f"Cтол {num_tb}", font="Helvetica 25",background="#002238", foreground='white')
-        # label.pack(anchor=tk.W, pady=30, padx=10)
+        result = MainApp.curs.execute("SELECT Номер_стола FROM Карта_заказа")
+        num_tb =0
+        for row in result:
+            for field in row:
+                num_tb = field
+        label = tk.Label(self,text=f"Cтол {num_tb}", font="Helvetica 25",background="#002238", foreground='white')
+        label.pack(anchor=tk.W, pady=30, padx=10)
 
 #Фрейм 2 - фрейм меню
 class Frame_menu(tk.Frame):
