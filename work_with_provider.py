@@ -76,7 +76,6 @@ class Frame2(tk.Frame):
         self.text_2.delete(0, 'end')
         self.text_3.delete(0, 'end')
         self.text_4.delete(0, 'end')
-        self.combo.delete(0, 'end')
     #возвращение в меню
     def ret(self):
         app.destroy()
