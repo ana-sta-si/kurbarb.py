@@ -30,7 +30,6 @@ class MainApp(tk.Tk):
         conn = sqlite3.connect('DataBase.db')
         curs = conn.cursor()
         curs.execute(f'INSERT INTO Финансы (Дата, Дебит, Комментарий) VALUES ("{data}","{summa}","{comm}")')
-        curs.execute(q)
         conn.commit()
         curs.close()
         conn.commit()
