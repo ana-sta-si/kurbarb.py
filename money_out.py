@@ -16,20 +16,23 @@ class MainApp(tk.Tk):
         self.label_2.pack(pady=10)
         label_3 = tk.Label(self,text="Комментарий:", foreground='#F8F8FF', font="Helvetica 12",background='#202020')
         label_3.pack(pady=180,padx=230, side=LEFT, anchor=NW)
-        entry_1 = tk.Entry(self,background='#F8F8FF', foreground='black')
-        entry_1.place(y = 350, x =230, height=300, width=550)
+        self.entry_1 = tk.Entry(self,background='#F8F8FF', foreground='black')
+        self.entry_1.place(y = 350, x =230, height=300, width=550)
         self.entry_2 = tk.Entry(self,background='grey', foreground='white', font="Helvetica 35 bold", justify= RIGHT )
         self.entry_2.place(y = 200, x =230, height=80, width=550)
         but_otmena = tk.Button(self, background='#202020', text='Отмена', command=self.close, font="Helvetica 25 bold", foreground='#F8F8FF', borderwidth=0)
         but_otmena.place(x = 845, y = 730)
-        but_ok = tk.Button(self, background='#202020', text='Изъять', command= lambda : self.out_(self.curr_time,self.entry_2.get()), font="Helvetica 25 bold", foreground='#F8F8FF', borderwidth=0)
+        but_ok = tk.Button(self, background='#202020', text='Изъять', command= lambda : self.out_(self.curr_time,self.entry_2.get(),self.entry_1.get()), font="Helvetica 25 bold", foreground='#F8F8FF', borderwidth=0)
         but_ok.place(x = 690, y = 730)
     def close(self):
         app.destroy()
-    def out_(self, data, summa):
+    def out_(self, data, summa,comm):
         conn = sqlite3.connect('DataBase.db')
         curs = conn.cursor()
-        curs.execute(f'INSERT INTO Изъятие (дата_время, сумма) VALUES ("{data}","{summa}")')
+        bal = curs.execute('SELECT SUM(Дебит)-SUM(Кредит) FROM Финансы').fetchone()
+        ibal =bal[0] - int(summa)
+        conn.execute('INSERT INTO Финансы (Дата, Кредит, Баланс, Комментарий) VALUES (?,?,?,?)',
+                     (data, summa, ibal, comm))
         conn.commit()
         curs.close()
         conn.commit()
