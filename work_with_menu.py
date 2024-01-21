@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 import sqlite3
-import pandas as pd
-import sqlalchemy
 #главное окно приложения
 class MainApp(tk.Tk):
     conn = sqlite3.connect('DataBase.db')
