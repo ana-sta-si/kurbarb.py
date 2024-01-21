@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import LEFT, NW, RIGHT
 import sqlite3
 import datetime
+from tkinter.messagebox import showerror
 #главное окно приложения
 class MainApp(tk.Tk):
     def __init__(self):
@@ -31,12 +32,15 @@ class MainApp(tk.Tk):
         curs = conn.cursor()
         bal = curs.execute('SELECT SUM(Дебит)-SUM(Кредит) FROM Финансы').fetchone()
         ibal =bal[0] - int(summa)
-        conn.execute('INSERT INTO Финансы (Дата, Кредит, Баланс, Комментарий) VALUES (?,?,?,?)',
-                     (data, summa, ibal, comm))
-        conn.commit()
-        curs.close()
-        conn.commit()
-        app.destroy()
+        print(ibal)
+        if ibal >= 0:
+            conn.execute('INSERT INTO Финансы (Дата, Кредит, Баланс, Комментарий) VALUES (?,?,?,?)',
+                         (data, summa, ibal, comm))
+            conn.commit()
+            curs.close()
+            conn.commit()
+            app.destroy()
+        else:showerror(title="Ошибка", message="Вы не можете изъять больше денег, чем находится в кассе")
 
 
 
