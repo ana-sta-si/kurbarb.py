@@ -29,7 +29,7 @@ class MainApp(tk.Tk):
     def in_(self, data, summa,comm):
         conn = sqlite3.connect('DataBase.db')
         curs = conn.cursor()
-        curs.execute(f'INSERT INTO Финансы (Дата, Дебит, Комментарий) VALUES ("{data}","{summa}","{comm}")')
+        curs.execute(f'INSERT INTO Финансы (Дата, Дебит, Кредит, Комментарий) VALUES ("{data}","{summa}",0,"{comm}")')
         conn.commit()
         curs.close()
         conn.commit()
